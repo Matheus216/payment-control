@@ -1,0 +1,1 @@
+global using payment_control_api.Configuration;

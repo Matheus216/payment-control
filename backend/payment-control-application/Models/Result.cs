@@ -20,14 +20,14 @@ public class Result<TResult>
 
     }
 
-    public Result(IEnumerable<string> errorMessages, CodReturn codReturn)
+    public Result(IEnumerable<string> errorMessages, CodReturn codReturn = CodReturn.InternalServerError)
     {
         this.ErrorMessages = errorMessages;
         this.Success = false;
         this.CodReturn = codReturn;
     }
 
-    public Result(string errorMessage, CodReturn codReturn)
+    public Result(string errorMessage, CodReturn codReturn = CodReturn.InternalServerError)
     {
         this.ErrorMessages = new List<string> { errorMessage };
         this.Success = false;

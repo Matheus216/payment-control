@@ -33,7 +33,7 @@ public class ClientRepository : IClientRepository
     {
         return await _clients
             .OrderBy(x => x.Id)
-            .Skip(page * (itemsPeerPage - 1))
+            .Skip(itemsPeerPage * (page - 1))
             .Take(itemsPeerPage)
             .Select(x => new ClientEntity(
             
@@ -42,5 +42,11 @@ public class ClientRepository : IClientRepository
                 x.Email
             ))
             .ToListAsync();
+    }
+
+    public async Task<ClientEntity> GetById(int id)
+    {
+        var model = await _clients.FirstOrDefaultAsync(x => x.Id == id);
+        return new(model.Id, model.Name, model.Email);
     }
 }

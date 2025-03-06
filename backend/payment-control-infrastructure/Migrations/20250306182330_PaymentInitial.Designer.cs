@@ -11,7 +11,7 @@ using payment_control_infrastructure.Context;
 namespace payment_control_infrastructure.Migrations
 {
     [DbContext(typeof(PaymentContext))]
-    [Migration("20250306173855_PaymentInitial")]
+    [Migration("20250306182330_PaymentInitial")]
     partial class PaymentInitial
     {
         /// <inheritdoc />

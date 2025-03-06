@@ -4,6 +4,10 @@ EXPOSE 5198
 
 ENV ASPNETCORE_URLS=http://+:5198
 
+RUN mkdir -p /app/App_Data && chown -R app:app /app/App_Data
+RUN apt-get update && apt-get install -y sudo
+RUN sudo apt-get install -y sqlite3
+
 USER app
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG configuration=Release

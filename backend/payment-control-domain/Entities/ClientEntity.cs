@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using payment_control_domain.Exceptions;
 
 namespace payment_control_domain.Entities;
@@ -25,12 +26,12 @@ public class ClientEntity
     {
         if (string.IsNullOrEmpty(this.Name))
         {
-            throw new ValidationEntityException("Name is required");
+            throw new ValidationEntityException("Name inválido");
         }
 
-        if (string.IsNullOrEmpty(this.Email))
+        if (string.IsNullOrEmpty(this.Email) || !Regex.IsMatch(Email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"))
         {
-            throw new ValidationEntityException("Email is required");
+            throw new ValidationEntityException("Email inválido");
         }
     }
 

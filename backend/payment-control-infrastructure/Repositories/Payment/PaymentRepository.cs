@@ -49,7 +49,7 @@ public class PaymentRepository : IPaymentRepository
             x.Value,
             x.Date,
             (StatusPaymentEnum)x.Status,
-            new ClientEntity(x.Client.Name, x.Client.Email)
+            new ClientEntity(x?.Client?.Name ?? "", x?.Client?.Email ?? "")
         ));
     }
 

@@ -37,7 +37,17 @@ public class PaymentService : IPaymentService
 
             var result = await _repository.Create(entity);
 
-            return new(new PaymentResponse { Id = result });
+            return new
+            (
+                new PaymentResponse 
+                { 
+                    Id = result, 
+                    Value = request.Value, 
+                    Date = request.Date, 
+                    ClientId = request.ClientId, 
+                    Status = StatusPaymentEnum.Pending 
+                }
+            );
         }
         catch (ValidationEntityException ex)
         {

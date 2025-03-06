@@ -13,6 +13,7 @@ services:
     ports:
       - 5198:5198
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      ASPNETCORE_ENVIRONMENT: Development
+      CONNECTIONTRINGS__PAYMENTCONTROLDB: Data Source=paymentcontrol.db
     volumes:
       - ~/.vsdbg:/remote_debugger:rw

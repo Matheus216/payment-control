@@ -1,0 +1,5 @@
+dotnet ef migrations add PaymentInitial  --startup-project ./payment-control-api/payment-control-api.csproj --project ./payment-control-infrastructure/payment-control-infrastructure.csproj
+
+dotnet ef database update --startup-project ./payment-control-api/payment-control-api.csproj --project ./payment-control-infrastructure/payment-control-infrastructure.csproj
+
+sudo chmod 666 MyApp.Api/App_Data/MyAppDb.sqlite

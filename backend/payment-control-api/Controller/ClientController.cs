@@ -41,7 +41,7 @@ public class ClientController : ControllerBase
     /// <response code="500">If there was an internal server error</response>
     /// <response code="404">If there are no clients</response>
     [HttpGet]
-    public async Task<ActionResult<Result<ClientResponse>>> GetClients([FromQuery] ClientRequest request) 
+    public async Task<ActionResult<Result<IEnumerable<ClientResponse>>>> GetClients([FromQuery] ClientRequest request) 
     {
         var result = await _clientService.GetAll(request);
         return StatusCode((int)result.CodReturn, result);

@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\payment-control-domain\payment-control-domain.csproj" />
     <ProjectReference Include="..\payment-control-application\payment-control-application.csproj" />
+    <ProjectReference Include="..\payment-control-infrastructure\payment-control-infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

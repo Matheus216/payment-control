@@ -6,7 +6,12 @@ namespace payment_control_domain.Aggregates;
 
 public class PaymentAggregate
 {
-    public PaymentAggregate(int clientId, decimal value, DateTime date, ClientEntity client)
+    public PaymentAggregate(
+        int clientId, 
+        decimal value, 
+        DateTime date, 
+        ClientEntity client
+    )
     {
         this.ClientId = clientId;
         this.Value = value;
@@ -17,7 +22,14 @@ public class PaymentAggregate
         this.IsValid();
     }
 
-    public PaymentAggregate(int id, int clientId, decimal value, DateTime date, StatusPaymentEnum status, ClientEntity client)
+    public PaymentAggregate(
+        int id, 
+        int clientId, 
+        decimal value, 
+        DateTime date, 
+        StatusPaymentEnum status, 
+        ClientEntity client
+    )
     {
         if (id <= 0)
         {

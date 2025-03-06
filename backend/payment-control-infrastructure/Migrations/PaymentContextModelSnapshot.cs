@@ -52,7 +52,7 @@ namespace payment_control_infrastructure.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<decimal>("Value")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 

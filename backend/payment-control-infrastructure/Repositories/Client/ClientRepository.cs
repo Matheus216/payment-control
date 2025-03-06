@@ -25,8 +25,10 @@ public class ClientRepository : IClientRepository
             Email = entity.Email
         };
 
-        await _clients.AddAsync(model);
-        return await _context.SaveChangesAsync();
+        var insered = await _clients.AddAsync(model);
+        await _context.SaveChangesAsync();
+
+        return insered.Entity.Id;
     }
 
     public async Task<IEnumerable<ClientEntity>> GetAll(int page = 1, int itemsPeerPage = 50)

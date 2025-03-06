@@ -20,6 +20,8 @@ public class PaymentContext : DbContext
                 entity.HasOne(x => x.Client)
                     .WithMany(x => x.Payments)
                     .HasForeignKey(x => x.ClientId);
+
+                entity.Property(p => p.Value).HasColumnType("REAL");
             });
 
         modelBuilder
@@ -28,6 +30,7 @@ public class PaymentContext : DbContext
                 entity.HasMany(x => x.Payments)
                     .WithOne(x => x.Client)
                     .HasForeignKey(x => x.ClientId);
+
             });
         
         base.OnModelCreating(modelBuilder);

@@ -32,7 +32,7 @@ namespace payment_control_infrastructure.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ClientId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Value = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Value = table.Column<decimal>(type: "REAL", nullable: false),
                     Date = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Status = table.Column<int>(type: "INTEGER", nullable: false)
                 },

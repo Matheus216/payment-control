@@ -72,18 +72,16 @@ public class ClientService : IClientService
         }
     }
 
-    public async Task<Result<ClientResponse>> GetById(int id)
+    public async Task<Result<ClientEntity>> GetById(int id)
     {
         try
         {
             var response = await _repository.GetById(id);
 
-            return new(new ClientResponse
-            {
-                Id = response.Id,
-                Name = response.Name,
-                Email = response.Email
-            });
+            if (response is null || response.Id == 0)
+                return new("Cliente não encontrado", CodReturn.NotFound);
+
+            return new(response);
         }
         catch (ValidationEntityException ex)
         {

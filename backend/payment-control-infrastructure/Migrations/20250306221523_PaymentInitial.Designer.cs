@@ -11,7 +11,7 @@ using payment_control_infrastructure.Context;
 namespace payment_control_infrastructure.Migrations
 {
     [DbContext(typeof(PaymentContext))]
-    [Migration("20250306182330_PaymentInitial")]
+    [Migration("20250306221523_PaymentInitial")]
     partial class PaymentInitial
     {
         /// <inheritdoc />
@@ -55,7 +55,7 @@ namespace payment_control_infrastructure.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<decimal>("Value")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 

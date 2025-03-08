@@ -52,7 +52,7 @@ public class PaymentService : IPaymentService
         catch (ValidationEntityException ex)
         {
             _logger.LogWarning("Erro na validação da entidade");
-            return new(ex.Message);
+            return new(ex.Message, CodReturn.BadRequest);
         }
         catch (Exception ex)
         {
@@ -79,7 +79,7 @@ public class PaymentService : IPaymentService
         catch (ValidationEntityException ex)
         {
             _logger.LogWarning("Erro na validação da entidade");
-            return new(ex.Message);
+            return new(ex.Message, CodReturn.BadRequest);
         }
 
         catch (Exception ex)
@@ -115,7 +115,7 @@ public class PaymentService : IPaymentService
         catch (ValidationEntityException ex)
         {
             _logger.LogWarning("Erro na validação da entidade");
-            return new(ex.Message);
+            return new(ex.Message, CodReturn.BadRequest);
         }
         catch (Exception ex)
         {

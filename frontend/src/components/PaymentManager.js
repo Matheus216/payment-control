@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {
   Card, CardContent, Typography, TextField, MenuItem, Button, Table, TableHead, TableBody, TableRow, TableCell,
-  Dialog, DialogActions, DialogContent, DialogTitle
+  Dialog, DialogActions, DialogContent, DialogTitle, Snackbar, Alert
 } from "@mui/material";
 
 import api from "../services/api";
-;
 
 const PaymentManager = () => {
   const [selectedClient, setSelectedClient] = useState("");
@@ -14,8 +13,8 @@ const PaymentManager = () => {
   const [payments, setPayments] = useState([]);
   const [status, setStatus] = useState(0)
   const [filterClient, setFilterClient] = useState("");
-  const [error, setError] = useState("");
   const [clients, setClients] = useState([])
+  const [message, setMessage] = useState({show: false, desc: '', type: 'success'})
 
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [editPayment, setEditPayment] = useState(null);
@@ -23,32 +22,50 @@ const PaymentManager = () => {
   useEffect(() => {
     api.get('/client').then(response => {
       try {
-        if (!response.data.success) response.data.errorMessages.each(x => setError(x));
+        if (!response.data.success) response.data.errorMessages.forEach(x => lanceError(x));
         setClients(response.data.data); 
       } catch (e) {
-        setError(e.message)
+        if (e?.response?.data?.errorMessages[0])
+          lanceError(e.response.data.errorMessages[0])
+        else
+          lanceError(e.message)
       }
     })
-    
   },[])
+
+  function lanceError(message) {
+    setMessage({type:'error', desc: message, show: true})
+  }
+
+  function lanceSuccess(message) {
+    setMessage({type: 'success', desc: message, show:true})
+  }
   
   async function fetchPayment(clientId) {
     api.get(`/payment/${clientId}`).then(response => {
        try {
-        if (!response.data.success) response.data.errorMessages.each(x => setError(x));
+        if (!response.data.success) response.data.errorMessages.each(x => lanceError(x));
         setPayments(response.data.data); 
       } catch (e) {
-        setError(e.message)
-      }
+         if (e?.response?.data?.errorMessages[0])
+           lanceError(e.response.data.errorMessages[0])
+         else
+           lanceError(e.message)
+       }
     })
   }
   async function updateStatusPayment() {
     try {
-      const response = await api.put(`/payment/${editPayment.id}/status?status=${status}`);
-      if (!response.data.success) response.data.errorMessages.each(x => setError(x))
+      const response = await api.put(`/payment/${editPayment.id}/status?status=${status}`)
+       
+      console.log('req' + response)
+      if (!response.data.success) response.data.errorMessages.each(x => lanceError(x))
     }
     catch (e) {
-      setError(e.message)
+      if (e?.response?.data?.errorMessages[0])
+        lanceError(e.response.data.errorMessages[0])
+      else
+        lanceError(e.message)
     }
   }
 
@@ -59,10 +76,15 @@ const PaymentManager = () => {
         value: parseFloat(value),
         date: date
       });
-      if (!response.data.success) response.data.errorMessages.each(x => setError(x))
+      if (!response.data.success) response.data.errorMessages.each(x => lanceError(x))
+
+      lanceSuccess('Cadastrado pagamento com sucesso')
     }
     catch (e) {
-      setError(e.message)
+       if (e?.response?.data?.errorMessages[0])
+        lanceError(e.response.data.errorMessages[0])
+      else
+        lanceError(e.message)
     }
   }
 
@@ -92,8 +114,8 @@ const PaymentManager = () => {
     setEditDialogOpen(false);
     await updateStatusPayment()
     await fetchPayment(editPayment.clientId)
+    setStatus(0)
   };
-
 
   const handleChangeStatus = (statuValue) => {
     setStatus(statuValue)
@@ -123,7 +145,8 @@ const PaymentManager = () => {
         </Button>
 
         <TextField
-          select fullWidth label="Filtrar por Cliente" value={filterClient}
+          placeholder="Para filtrar basta selecionar um cliente"
+          select fullWidth label="Selectione um cliente para filtrar" value={filterClient}
           onChange={(e) => handleFilterClient(e.target.value)} sx={{ my: 2 }}
         >
           {clients.map((client) => (
@@ -185,7 +208,18 @@ const PaymentManager = () => {
           </DialogActions>
         </Dialog>
       </CardContent>
+      <Snackbar
+        open={message.show}
+        autoHideDuration={3000}
+        onClose={() => setMessage({ ...message, show: false})}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert onClose={() => setMessage({...message, show: false})} severity={message.type}>
+          {message.desc}
+        </Alert>
+      </Snackbar>
     </Card>
+    
   );
 };
 

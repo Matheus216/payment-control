@@ -89,7 +89,6 @@ export default function ClientManager() {
     <div style={{ maxWidth: "600px", margin: "auto", padding: "20px" }}>
       <h1>Gerenciador de Clientes</h1>
 
-      {/* Formulário */}
       <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
         <TextField
           label="Nome"
@@ -118,7 +117,6 @@ export default function ClientManager() {
         </Button>
       </form>
 
-      {/* Alerta de Sucesso */}
       <Snackbar
         open={success}
         autoHideDuration={3000}

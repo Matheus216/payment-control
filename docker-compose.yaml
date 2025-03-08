@@ -1,0 +1,23 @@
+services:
+  paymentcontrolapi:
+    image: paymentcontrolapi
+    build:
+      context: ./backend
+      dockerfile: payment-control-api/Dockerfile
+    ports:
+      - 5198:5198
+    environment:
+      CONNECTIONTRINGS__PAYMENTCONTROLDB: Data Source=App_Data/payment-prod.sqlite
+    networks:
+      - payment-net
+  react:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    networks:
+      - payment-net
+networks:
+  payment-net:
+    driver: bridge

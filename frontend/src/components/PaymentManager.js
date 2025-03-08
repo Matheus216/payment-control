@@ -7,33 +7,33 @@ import {
 import api from "../services/api";
 
 const PaymentManager = () => {
-  const [selectedClient, setSelectedClient] = useState("");
-  const [date, setDate] = useState("");
-  const [value, setValue] = useState("");
-  const [payments, setPayments] = useState([]);
+  const [selectedClient, setSelectedClient] = useState("")
+  const [date, setDate] = useState("")
+  const [value, setValue] = useState("")
+  const [payments, setPayments] = useState([])
   const [status, setStatus] = useState(0)
-  const [filterClient, setFilterClient] = useState("");
+  const [filterClient, setFilterClient] = useState("")
   const [clients, setClients] = useState([])
   const [message, setMessage] = useState({show: false, desc: '', type: 'success'})
 
-  const [editDialogOpen, setEditDialogOpen] = useState(false);
-  const [editPayment, setEditPayment] = useState(null);
+  const [editDialogOpen, setEditDialogOpen] = useState(false)
+  const [editPayment, setEditPayment] = useState(null)
 
   useEffect(() => {
     api.get('/client').then(response => {
       try {
-        if (!response.data.success) response.data.errorMessages.forEach(x => lanceError(x));
-        setClients(response.data.data); 
+        if (!response.data.success) response.data.errorMessages.forEach(x => raiseError(x))
+        setClients(response.data.data)
       } catch (e) {
         if (e?.response?.data?.errorMessages[0])
-          lanceError(e.response.data.errorMessages[0])
+          raiseError(e.response.data.errorMessages[0])
         else
-          lanceError(e.message)
+          raiseError(e.message)
       }
     })
   },[])
 
-  function lanceError(message) {
+  function raiseError(message) {
     setMessage({type:'error', desc: message, show: true})
   }
 
@@ -44,13 +44,13 @@ const PaymentManager = () => {
   async function fetchPayment(clientId) {
     api.get(`/payment/${clientId}`).then(response => {
        try {
-        if (!response.data.success) response.data.errorMessages.each(x => lanceError(x));
+        if (!response.data.success) response.data.errorMessages.each(x => raiseError(x));
         setPayments(response.data.data); 
       } catch (e) {
          if (e?.response?.data?.errorMessages[0])
-           lanceError(e.response.data.errorMessages[0])
+           raiseError(e.response.data.errorMessages[0])
          else
-           lanceError(e.message)
+           raiseError(e.message)
        }
     })
   }
@@ -59,32 +59,49 @@ const PaymentManager = () => {
       const response = await api.put(`/payment/${editPayment.id}/status?status=${status}`)
        
       console.log('req' + response)
-      if (!response.data.success) response.data.errorMessages.each(x => lanceError(x))
+      if (!response.data.success) response.data.errorMessages.each(x => raiseError(x))
     }
     catch (e) {
       if (e?.response?.data?.errorMessages[0])
-        lanceError(e.response.data.errorMessages[0])
+        raiseError(e.response.data.errorMessages[0])
       else
-        lanceError(e.message)
+        raiseError(e.message)
     }
   }
 
   async function addPayment() {
     try {
+
+      if (selectedClient == 0) {
+        raiseError('Necessário informar o cliente')
+        return
+      }
+
+      console.log(value)
+      if (value == '0' || !value || value == '' || parseFloat(value) <= 0 ){
+        raiseError('Necessário informar o valor')
+        return
+      }
+      
+      if (!date || date == ''){
+        raiseError('Necessário informar a data')
+        return
+      }
+
       const response = await api.post('/payment', {
         clientId: selectedClient,
         value: parseFloat(value),
         date: date
       });
-      if (!response.data.success) response.data.errorMessages.each(x => lanceError(x))
+      if (!response.data.success) response.data.errorMessages.each(x => raiseError(x))
 
       lanceSuccess('Cadastrado pagamento com sucesso')
     }
     catch (e) {
        if (e?.response?.data?.errorMessages[0])
-        lanceError(e.response.data.errorMessages[0])
+        raiseError(e.response.data.errorMessages[0])
       else
-        lanceError(e.message)
+        raiseError(e.message)
     }
   }
 
@@ -98,7 +115,6 @@ const PaymentManager = () => {
     }
   }
   async function handleAddPayment(){
-    if (!selectedClient || !date || !value) return;
     await addPayment()
     setSelectedClient("")
     setDate("")
@@ -106,12 +122,12 @@ const PaymentManager = () => {
   };
 
   const handleEdit = (payment) => {
-    setEditPayment(payment);
-    setEditDialogOpen(true);
+    setEditPayment(payment)
+    setEditDialogOpen(true)
   };
 
   async function handleSaveEdit() {
-    setEditDialogOpen(false);
+    setEditDialogOpen(false)
     await updateStatusPayment()
     await fetchPayment(editPayment.clientId)
     setStatus(0)
@@ -223,4 +239,4 @@ const PaymentManager = () => {
   );
 };
 
-export default PaymentManager;
+export default PaymentManager

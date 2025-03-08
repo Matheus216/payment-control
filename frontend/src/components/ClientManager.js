@@ -14,20 +14,20 @@ import {
   TablePagination,
 } from "@mui/material";
 
-import api from '../services/api';
+import api from '../services/api'
 
 export default function ClientManager() {
-  const [clients, setClients] = useState([]);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
-  const [totalItems, setTotalItems] = useState(0);
+  const [clients, setClients] = useState([])
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [error, setError] = useState("")
+  const [success, setSuccess] = useState(false)
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(5)
+  const [totalItems, setTotalItems] = useState(0)
 
   useEffect(() => {
-    fetchClients();
+    fetchClients()
   }, []);
 
   async function fetchClients(pageInput = 1, pageSizeInput = 5) {
@@ -37,22 +37,22 @@ export default function ClientManager() {
             'Pagination.Page': pageInput,
             'Pagination.PageSize': pageSizeInput
         }
-      });
-      if (!response.data.success) response.data.errorMessages.each(x => setError(x));
-      setClients(response.data.data); 
-      setTotalItems(response.data.totalItems);
+      })
+      if (!response.data.success) response.data.errorMessages.each(x => setError(x))
+      setClients(response.data.data) 
+      setTotalItems(response.data.totalItems)
     } catch (err) {
-      setError(err.message);
+      setError(err.message)
     }
   }
 
   async function handleSubmit(e) {
-    e.preventDefault();
-    setError("");
-    setSuccess(false);
+    e.preventDefault()
+    setError("")
+    setSuccess(false)
 
     if (!name.trim() || !email.trim()) {
-      setError("Nome e e-mail são obrigatórios.");
+      setError("Nome e e-mail são obrigatórios.")
       return;
     }
 
@@ -65,23 +65,23 @@ export default function ClientManager() {
 
       if (!response.ok) throw new Error("Erro ao cadastrar cliente");
 
-      setSuccess(true);
-      setName("");
-      setEmail("");
-      await fetchClients(); 
+      setSuccess(true)
+      setName("")
+      setEmail("")
+      await fetchClients();
     } catch (err) {
-      setError(err.message);
+      setError(err.message)
     }
   }
 
   async function handleChangePage(_, newPage){
     console.log(newPage)
-    setPage(newPage);
+    setPage(newPage)
     await fetchClients(newPage, pageSize)
   } 
   async function handleChangeRowsPerPage(event) {
-    setPageSize(parseInt(event.target.value, 10));
-    setPage(1);
+    setPageSize(parseInt(event.target.value, 10))
+    setPage(1)
     await fetchClients(page, parseInt(event.target.value, 10))
   };
 

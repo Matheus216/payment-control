@@ -4,10 +4,10 @@ import SidebarMenu from './components/SidebarMenu';
 import { AppBar, Container, Toolbar, Typography } from '@mui/material';
 import ClientManager from './components/ClientManager';
 import PaymentManager from './components/PaymentManager';
+import PaymentSummary from './components/Summary';
 
 const App = () => {
   const [selectedOption, setSelectedOption] = useState("");
-  const [selectedClientId, setSelectedClient] = useState(0);
 
   const renderContent = () => {
     switch (selectedOption) {
@@ -16,7 +16,7 @@ const App = () => {
       case "createPayment":
         return <PaymentManager />;
       default:
-        return <ClientManager />;
+        return <PaymentSummary />;
     }
   };
 

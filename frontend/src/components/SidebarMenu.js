@@ -12,7 +12,6 @@ const SidebarMenu = ({ onSelect }) => {
   };
 
   
-
   return (
     <>
       <IconButton onClick={toggleDrawer(true)} color="inherit">
@@ -33,6 +32,13 @@ const SidebarMenu = ({ onSelect }) => {
               <PaymentIcon />
             </ListItemIcon>
             <ListItemText primary="Criar Pagamentos" />
+          </ListItem>
+
+          <ListItem button onClick={() => onSelect("summary")} style={{ cursor: 'pointer' }}>
+            <ListItemIcon>
+              <PaymentIcon />
+            </ListItemIcon>
+            <ListItemText primary="Resumo" />
           </ListItem>
         </List>
       </Drawer>

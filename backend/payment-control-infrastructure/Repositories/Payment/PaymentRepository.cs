@@ -90,4 +90,10 @@ public class PaymentRepository : IPaymentRepository
         return linesAffected;
     }
 
+    public async Task<int> GetTotalByStatus(StatusPaymentEnum status) 
+    {
+        var counted = await _payments.CountAsync(x => x.Status == (int)status);
+        return counted;
+    }
+
 }

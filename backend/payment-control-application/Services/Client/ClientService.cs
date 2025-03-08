@@ -97,4 +97,7 @@ public class ClientService : IClientService
             return new("Erro não esperado");
         }
     }
+
+    public async Task<int> GetCount() 
+        => await _repository.GetTotal();
 }

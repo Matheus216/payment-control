@@ -9,4 +9,5 @@ public interface IPaymentService
     Task<Result<PaymentResponse>> Create(PaymentRequest request);
     Task<Result<IEnumerable<PaymentResponse>>> GetByClientId(int clientId);
     Task<Result<PaymentResponse>> UpdateStatus(int paymentId, StatusPaymentEnum status);
+    Task<Result<SummaryResponse>> GetSummary();
 }

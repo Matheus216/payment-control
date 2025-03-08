@@ -8,4 +8,5 @@ public interface IClientService
     Task<Result<IEnumerable<ClientResponse>>> GetAll(ClientRequest request);
     Task<Result<ClientResponse>> Create(ClientCreateRequest request);
     Task<Result<ClientEntity>> GetById(int id);
+    Task<int> GetCount();
 }

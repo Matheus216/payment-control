@@ -38,4 +38,11 @@ public class PaymentController : ControllerBase
         var result = await _paymentService.UpdateStatus(id, status);
         return StatusCode((int)result.CodReturn, result);
     }
+
+    [HttpGet("Summary")]
+    public async Task<ActionResult<Result<SummaryResponse>>> GetSummary()
+    {
+        var result = await _paymentService.GetSummary();
+        return StatusCode((int)result.CodReturn, result);
+    }
 }

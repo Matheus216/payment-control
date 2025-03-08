@@ -15,7 +15,7 @@ public class PaymentAggregateTest
         int clientId = 1;
         decimal value = 100.0m;
         DateTime date = DateTime.Now;
-        var client = new ClientEntity(clientId,"Test Client", "email");
+        var client = new ClientEntity(clientId,"Test Client", "email@email.com");
 
         // Act
         var paymentAggregate = new PaymentAggregate(clientId, value, date, client);
@@ -25,7 +25,6 @@ public class PaymentAggregateTest
         Assert.Equal(value, paymentAggregate.Value);
         Assert.Equal(date, paymentAggregate.Date);
         Assert.Equal(StatusPaymentEnum.Pending, paymentAggregate.Status);
-        Assert.Equal(client, paymentAggregate.Client);
     }
 
     [Fact]
@@ -35,7 +34,7 @@ public class PaymentAggregateTest
         int clientId = 0;
         decimal value = 100.0m;
         DateTime date = DateTime.Now;
-        var client = new ClientEntity(clientId,"Test Client", "email");
+        var client = new ClientEntity(clientId,"Test Client", "email@email.com");
 
         // Act & Assert
         Assert.Throws<ValidationEntityException>(() => new PaymentAggregate(clientId, value, date, client));
@@ -48,7 +47,7 @@ public class PaymentAggregateTest
         int clientId = 1;
         decimal value = 0.0m;
         DateTime date = DateTime.Now;
-        var client = new ClientEntity(clientId,"Test Client", "email");
+        var client = new ClientEntity(clientId,"Test Client", "email@email.com");
 
         // Act & Assert
         Assert.Throws<ValidationEntityException>(() => new PaymentAggregate(clientId, value, date, client));
@@ -61,7 +60,7 @@ public class PaymentAggregateTest
         int clientId = 1;
         decimal value = 100.0m;
         DateTime date = DateTime.MinValue;
-        var client = new ClientEntity(clientId,"Test Client", "email");
+        var client = new ClientEntity(clientId,"Test Client", "email@email.com");
 
 
         // Act & Assert

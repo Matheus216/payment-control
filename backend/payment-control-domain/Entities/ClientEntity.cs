@@ -26,7 +26,7 @@ public class ClientEntity
     {
         if (string.IsNullOrEmpty(this.Name))
         {
-            throw new ValidationEntityException("Name inválido");
+            throw new ValidationEntityException("Nome inválido");
         }
 
         if (string.IsNullOrEmpty(this.Email) || !Regex.IsMatch(Email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"))

@@ -123,4 +123,27 @@ public class PaymentService : IPaymentService
             return new("Erro não esperado");
         }
     }
+
+    public async Task<Result<SummaryResponse>> GetSummary()
+    {
+        try 
+        {
+            var countedPending = await _repository.GetTotalByStatus(StatusPaymentEnum.Pending);
+            var countedPaid = await _repository.GetTotalByStatus(StatusPaymentEnum.Paid);
+            var countedCanceled = await _repository.GetTotalByStatus(StatusPaymentEnum.Canceled);
+            var countedClient = await _clientService.GetCount();
+
+            return new(new SummaryResponse {
+                TotalPending = countedPending,
+                TotalPaid = countedPaid,
+                TotalCanceled = countedCanceled,
+                TotalClients = countedClient
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            return new ("Erro não esperado");
+        }
+    }
 }

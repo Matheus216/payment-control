@@ -42,7 +42,10 @@ export default function ClientManager() {
       setClients(response.data.data) 
       setTotalItems(response.data.totalItems)
     } catch (err) {
-      setError(err.message)
+      if (err?.response?.data?.errorMessages[0])
+        setError(err.response.data.errorMessages[0])
+      else
+        setError(err.message)
     }
   }
 
@@ -57,20 +60,19 @@ export default function ClientManager() {
     }
 
     try {
-      const response = await fetch("http://localhost:5198/api/client", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email }),
+      const response = await api.post("http://localhost:5198/api/client", {
+        name, email 
       });
-
-      if (!response.ok) throw new Error("Erro ao cadastrar cliente");
 
       setSuccess(true)
       setName("")
       setEmail("")
       await fetchClients();
     } catch (err) {
-      setError(err.message)
+      if (err?.response?.data?.errorMessages[0])
+        setError(err.response.data.errorMessages[0])
+      else
+        setError(err.message)
     }
   }
 

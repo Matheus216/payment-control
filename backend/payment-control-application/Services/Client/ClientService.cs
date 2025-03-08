@@ -50,6 +50,8 @@ public class ClientService : IClientService
                request.Pagination.PageSize
            );
 
+           var totalItems = await _repository.GetTotal();
+
             return new
             (
                 response.Select(x => new ClientResponse
@@ -57,7 +59,8 @@ public class ClientService : IClientService
                     Id = x.Id,
                     Name = x.Name,
                     Email = x.Email
-                })
+                }),
+                totalItems: totalItems
             );
         }
         catch (ValidationEntityException ex)

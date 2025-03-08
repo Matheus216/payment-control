@@ -12,7 +12,8 @@ public static class InitializerConfiguration
 {
     public static IServiceCollection ConfigureInitializer(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddEndpointsApiExplorer()
+        services.ConfigureCors()
+            .AddEndpointsApiExplorer()
             .AddSwaggerGen()
             .DependencyInjectionInitializer()
             .AddControllers();
@@ -58,4 +59,14 @@ public static class InitializerConfiguration
             service?.Database.Migrate();
         }
     }   
+
+    public static IServiceCollection ConfigureCors(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+        });
+
+        return services;
+    }
 }

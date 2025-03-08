@@ -48,7 +48,7 @@ public class PaymentAggregate
 
     public void ChangeStatus(StatusPaymentEnum status)
     {
-        if (status != StatusPaymentEnum.Pending)
+        if (this.Status != StatusPaymentEnum.Pending)
         {
             throw new ValidationEntityException("Status só pode ser alterado se estiver como pendente");
         }

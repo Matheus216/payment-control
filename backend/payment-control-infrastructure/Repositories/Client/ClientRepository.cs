@@ -51,4 +51,6 @@ public class ClientRepository : IClientRepository
         var model = await _clients.FirstOrDefaultAsync(x => x.Id == id);
         return new(model.Id, model.Name, model.Email);
     }
+
+    public async Task<int> GetTotal() => await _clients.CountAsync();
 }

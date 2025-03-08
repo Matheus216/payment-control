@@ -8,7 +8,7 @@ Certifique-se de ter os seguintes softwares instalados:
 - [.NET SDK 8+](https://dotnet.microsoft.com/download)
 - [Node.js 18+](https://nodejs.org/)
 - SQLite3 (opcional, caso queira acessar o banco manualmente)
-
+- A aplicação utiliza o SQLite para facilitar a execução do programa e por ser uma implementação simples ser mais leve e facil de gerenciar.
 ---
 
 ## 🚀 Executando com Docker Compose
